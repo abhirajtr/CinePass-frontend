@@ -2,6 +2,7 @@ import { FC, useEffect, useState, useRef } from "react";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const Navbar: FC = () => {
     const [locationDropDown, setLocationDropDown] = useState<boolean>(false);
@@ -15,7 +16,7 @@ const Navbar: FC = () => {
         setLocationDropDown(!locationDropDown);
         setProfileDropDown(false); // Close profile dropdown when opening location dropdown
     };
-    
+
     const toggleProfileDropDown = () => {
         setProfileDropDown(!profileDropDown);
         setLocationDropDown(false); // Close location dropdown when opening profile dropdown
@@ -43,7 +44,7 @@ const Navbar: FC = () => {
             <div className="container mx-auto flex items-center justify-between">
                 {/* Logo */}
                 <div className="text-primary-800 font-bold text-xl">
-                    <a href="/">CinePass</a>
+                    <Link to="/">CinePass</Link>
                 </div>
 
                 {/* Search bar */}
@@ -61,8 +62,8 @@ const Navbar: FC = () => {
                     {/* Location */}
                     <div className="relative" ref={locationRef}>
                         <button
-                            onClick={toggleLocationDropDown }
-                            className="flex items-center w-40 text-text-950 focus:outline-none focus:ring focus:ring-accent-950"
+                            onClick={toggleLocationDropDown}
+                            className="flex items-center w-40 text-text-950 focus:outline-none focus:ring focus:ring-accent-500"
                             aria-haspopup="true"
                             aria-expanded={locationDropDown}
                         >
@@ -76,8 +77,8 @@ const Navbar: FC = () => {
                                 {["New York", "Los Angeles", "Chicago"].map((city) => (
                                     <button
                                         key={city}
-                                        onClick={() => {setSelectedLocation(city); setLocationDropDown(false)}}
-                                        className="block w-full text-left px-4 py-2 text-light hover:bg-gray-700"
+                                        onClick={() => { setSelectedLocation(city); setLocationDropDown(false) }}
+                                        className="block w-full text-left px-4 py-2 text-light hover:bg-accent-500"
                                     >
                                         {city}
                                     </button>
@@ -90,7 +91,7 @@ const Navbar: FC = () => {
                     <div className="relative" ref={profileRef}>
                         <button
                             onClick={toggleProfileDropDown}
-                            className="flex items-center text-text-950 focus:outline-none focus:ring focus:ring-accent"
+                            className="flex items-center text-text-950 focus:outline-none focus:ring focus:ring-accent-500"
                             aria-haspopup="true"
                             aria-expanded={profileDropDown}
                         >
@@ -100,12 +101,18 @@ const Navbar: FC = () => {
 
                         {profileDropDown && (
                             <div className="absolute right-0 mt-2 w-48 bg-secondary-950 rounded-md shadow-lg py-2 z-20">
-                                <a href="/profile" className="block px-4 py-2 text-light hover:bg-gray-700">
+                                <Link
+                                    to="/profile"
+                                    onClick={() => setProfileDropDown(false)}
+                                    className="block px-4 py-2 text-text-50 hover:bg-accent-500"
+                                >
                                     Profile
-                                </a>
-                                <a href="/logout" className="block px-4 py-2 text-light hover:bg-gray-700">
+                                </Link>
+                                <button
+                                    onClick={() => setProfileDropDown(false)}
+                                    className="block w-full px-4 py-2 text-left text-text-50 hover:bg-accent-500">
                                     Logout
-                                </a>
+                                </button>
                             </div>
                         )}
                     </div>

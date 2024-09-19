@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import UserLayout from "./layouts/UserLayout";
+// import UserLayout from "./layouts/UserLayout";
 import MovieCard from "./components/MovieCard";
 
 const image = 'https://image.tmdb.org/t/p/w1280/sjC29cgm4qZAnpOJQbYKCxDCcra.jpg';
@@ -94,7 +94,7 @@ const Home: React.FC = () => {
         };
     }, [])
     return (
-        <UserLayout>
+        <>
             {/* Hero Section */}
             <section className="relative w-full h-screen">
                 {/* Movie Banner Image */}
@@ -156,7 +156,7 @@ const Home: React.FC = () => {
                 </div>
             </section>
 
-        </UserLayout>
+        </>
     );
 };
 
