@@ -8,7 +8,7 @@ const UserLayout: FC = () => {
     return (
         <div className="flex flex-col min-h-screen bg-background-50 text-text">
             <Navbar />
-            <main className="flex-grow bg-background-50">
+            <main className="flex-grow bg-background-50 pt-16">
                 <Outlet />
             </main>
             <Footer />

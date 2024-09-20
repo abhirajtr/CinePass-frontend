@@ -8,10 +8,11 @@ interface AuthState {
     role: string | null;
 }
 
+const accessToken = localStorage.getItem('accessToken');
 const initialState: AuthState = {
-    accessToken: localStorage.getItem('accessToken'),
-    isAuthenticated: !!localStorage.getItem('accessToken'),
-    role: null,
+    accessToken,
+    isAuthenticated: !!accessToken,
+    role: accessToken ? getRoleFromToken(accessToken) : null,
 }
 
 const authSlice = createSlice({

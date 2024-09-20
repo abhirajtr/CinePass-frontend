@@ -4,6 +4,9 @@ import Home from "../Home";
 import ErrorPage from "../ErrorPage";
 import UserSignup from "../pages/user/UserSignup";
 import UserLogin from "../pages/user/UserLogin";
+import UserProfile from "../components/UserProfile";
+import ProtectedRoute from "../components/ProtectedRoute";
+
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -13,6 +16,11 @@ const router = createBrowserRouter(
             <Route path="/" element={<UserLayout />} >
                 <Route path="/" element={<Navigate to="/home" />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/profile" element={
+                    <ProtectedRoute requiredRole="user">
+                        <UserProfile />
+                    </ProtectedRoute>
+                } />
                 <Route path="*" element={<ErrorPage />} />
             </Route>
         </>

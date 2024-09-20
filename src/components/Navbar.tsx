@@ -2,16 +2,25 @@ import { FC, useEffect, useState, useRef } from "react";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const Navbar: FC = () => {
     const [locationDropDown, setLocationDropDown] = useState<boolean>(false);
     const [profileDropDown, setProfileDropDown] = useState<boolean>(false);
     const [selectedLocation, setSelectedLocation] = useState<string>("Location");
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const locationRef = useRef<HTMLDivElement>(null);
     const profileRef = useRef<HTMLDivElement>(null);
 
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate("/home");
+    }
     const toggleLocationDropDown = () => {
         setLocationDropDown(!locationDropDown);
         setProfileDropDown(false); // Close profile dropdown when opening location dropdown
@@ -109,7 +118,7 @@ const Navbar: FC = () => {
                                     Profile
                                 </Link>
                                 <button
-                                    onClick={() => setProfileDropDown(false)}
+                                    onClick={() => { setProfileDropDown(false); handleLogout(); }}
                                     className="block w-full px-4 py-2 text-left text-text-50 hover:bg-accent-500">
                                     Logout
                                 </button>
