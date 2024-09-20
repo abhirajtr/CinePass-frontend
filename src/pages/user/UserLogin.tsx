@@ -5,37 +5,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-// Validation Schema using Yup
-const SignupSchema = Yup.object().shape({
+const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
-    phone: Yup.string()
-        .matches(/^\d{10}$/, 'Phone number must be 10 digits')
-        .required('Required'),
     password: Yup.string()
         .min(6, 'Password is too short - should be 6 characters minimum.')
         .required('Required'),
-    confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'Passwords must match')
-        .required('Required'),
 });
 
-const UserSignup: React.FC = () => {
+const UserLogin: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-background-50">
             <div className="bg-background-100 p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h1 className="text-text-950 text-2xl font-bold mb-2">Sign Up for CinePass</h1>
+                <h1 className="text-text-950 text-2xl font-bold mb-2">CinePass</h1>
 
-                {/* Standard Message */}
-                <div className="mb-4   text-text-900 ">
-                    <p>Welcome to CinePass! Create your account to book movie seats in theaters quickly and easily.</p>
+                <div className="mb-4">
+                    <h3 className='font-semibold text-text-950'>Welcome back!</h3>
+                    <p
+                        className='text-text-800'
+                    >Don't have an account?{' '}
+                        <Link to="/signup"
+                            className='text-accent-500 hover:underline'
+                        >Create a new account now</Link><br />
+                        It's FREE! Takes less than a minute</p>
+
                 </div>
 
                 <Formik
-                    initialValues={{ email: '', phone: '', password: '', confirmPassword: '' }}
-                    validationSchema={SignupSchema}
+                    initialValues={{ email: '', password: '' }}
+                    validationSchema={LoginSchema}
                     onSubmit={(values) => {
                         // Handle form submission (send data to backend, etc.)
                         console.log(values);
@@ -55,21 +54,6 @@ const UserSignup: React.FC = () => {
                                 <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
                             </div>
 
-                            {/* Phone Field */}
-                            <div className="mb-4 relative">
-                                <label htmlFor="phone" className="block mb-1 text-text-950">Phone</label>
-                                <div className="flex items-center">
-                                    <span className="bg-background-500 border border-secondary-50 p-2 rounded-l-md text-text-100">+91</span>
-                                    <Field
-                                        type="text"
-                                        name="phone"
-                                        placeholder="XXXXXXXXXX"
-                                        className="text-text-950 bg-background-300 border border-secondary-200 p-2 rounded-r-md w-full"
-                                    />
-                                </div>
-                                <ErrorMessage name="phone" component="div" className="text-red-500 text-sm mt-1" />
-                            </div>
-
                             {/* Password Field */}
                             <div className="mb-4 relative">
                                 <label htmlFor="password" className="block mb-1 text-text-950">Password</label>
@@ -87,23 +71,6 @@ const UserSignup: React.FC = () => {
                                 <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
                             </div>
 
-                            {/* Confirm Password Field */}
-                            <div className="mb-4 relative">
-                                <label htmlFor="confirmPassword" className="block mb-1 text-text-950">Confirm Password</label>
-                                <Field
-                                    type={showConfirmPassword ? "text" : "password"}
-                                    name="confirmPassword"
-                                    className="text-text-950 bg-background-300 border border-secondary-200 p-2 rounded w-full"
-                                />
-                                <span
-                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="absolute right-3 top-10 cursor-pointer text-text-950"
-                                >
-                                    <FontAwesomeIcon icon={showConfirmPassword ? faEye : faEyeSlash} />
-                                </span>
-                                <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-1" />
-                            </div>
-
                             {/* Submit Button */}
                             <div>
                                 <button
@@ -111,24 +78,23 @@ const UserSignup: React.FC = () => {
                                     className="w-full bg-primary-600 text-white p-2 rounded mt-4"
                                     disabled={isSubmitting}
                                 >
-                                    Sign Up
+                                    Login
                                 </button>
                             </div>
                         </Form>
                     )}
                 </Formik>
 
-                {/* login */}
-                <div className='mt-4 text-center'>
-                    <p className='text-sm text-text-500'>
-                        Already have an account?{' '}
-                        <Link to="/login" className='text-accent-500 hover:underline'>Login</Link>
+                {/* Signup redirect */}
+                {/* <div className="mt-4 text-center">
+                    <p className="text-sm text-text-500">
+                        Don't have an account?{' '}
+                        <Link to="/signup" className="text-accent-500 hover:underline">Sign Up</Link>
                     </p>
-                </div>
-
+                </div> */}
             </div>
         </div>
     );
 };
 
-export default UserSignup;
+export default UserLogin;
