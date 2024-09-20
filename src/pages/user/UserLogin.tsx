@@ -4,6 +4,9 @@ import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { AppDispatch } from '../../store/Store';
+import { useDispatch } from 'react-redux';
+import { login } from '../../features/auth/authThunks';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -14,7 +17,7 @@ const LoginSchema = Yup.object().shape({
 
 const UserLogin: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
-
+    const dispatch: AppDispatch = useDispatch();
     return (
         <div className="flex justify-center items-center min-h-screen bg-background-50">
             <div className="bg-background-100 p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -35,9 +38,10 @@ const UserLogin: React.FC = () => {
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validationSchema={LoginSchema}
-                    onSubmit={(values) => {
-                        // Handle form submission (send data to backend, etc.)
-                        console.log(values);
+                    onSubmit={async (values) => {
+                        await dispatch(login(values))
+                            // Handle form submission (send data to backend, etc.)
+                            console.log(values);
                     }}
                 >
                     {({ isSubmitting }) => (
