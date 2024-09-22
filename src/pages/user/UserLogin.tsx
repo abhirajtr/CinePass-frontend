@@ -3,9 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
-import { AppDispatch } from '../../store/Store';
-import { useDispatch } from 'react-redux';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { AppDispatch, RootState } from '../../store/Store';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../features/auth/authThunks';
 
 const LoginSchema = Yup.object().shape({
@@ -19,6 +19,12 @@ const UserLogin: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
+
+    const isAuthenticated = useSelector((state: RootState) => state.authReducer.isAuthenticated);
+
+    if (isAuthenticated) {
+        return <Navigate to="/home" replace />
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-background-50">

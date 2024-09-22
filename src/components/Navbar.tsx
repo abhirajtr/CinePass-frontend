@@ -4,7 +4,8 @@ import { MdLocationOn } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/Store";
 
 const Navbar: FC = () => {
     const [locationDropDown, setLocationDropDown] = useState<boolean>(false);
@@ -13,6 +14,8 @@ const Navbar: FC = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const isAuthenticated = useSelector((state: RootState) => state.authReducer.isAuthenticated);
 
     const locationRef = useRef<HTMLDivElement>(null);
     const profileRef = useRef<HTMLDivElement>(null);
@@ -23,12 +26,12 @@ const Navbar: FC = () => {
     }
     const toggleLocationDropDown = () => {
         setLocationDropDown(!locationDropDown);
-        setProfileDropDown(false); // Close profile dropdown when opening location dropdown
+        setProfileDropDown(false);
     };
 
     const toggleProfileDropDown = () => {
         setProfileDropDown(!profileDropDown);
-        setLocationDropDown(false); // Close location dropdown when opening profile dropdown
+        setLocationDropDown(false);
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -110,18 +113,28 @@ const Navbar: FC = () => {
 
                         {profileDropDown && (
                             <div className="absolute right-0 mt-2 w-48 bg-secondary-950 rounded-md shadow-lg py-2 z-20">
-                                <Link
-                                    to="/profile"
+                                {isAuthenticated && <>
+                                    <Link
+                                        to="/profile"
+                                        onClick={() => setProfileDropDown(false)}
+                                        className="block px-4 py-2 text-text-50 hover:bg-accent-500"
+                                    >
+                                        Profile
+                                    </Link>
+                                    <button
+                                        onClick={() => { setProfileDropDown(false); handleLogout(); }}
+                                        className="block w-full px-4 py-2 text-left text-text-50 hover:bg-accent-500">
+                                        Logout
+                                    </button>
+                                </>}
+
+                                {!isAuthenticated && <Link
+                                    to="/login"
                                     onClick={() => setProfileDropDown(false)}
                                     className="block px-4 py-2 text-text-50 hover:bg-accent-500"
                                 >
-                                    Profile
-                                </Link>
-                                <button
-                                    onClick={() => { setProfileDropDown(false); handleLogout(); }}
-                                    className="block w-full px-4 py-2 text-left text-text-50 hover:bg-accent-500">
-                                    Logout
-                                </button>
+                                    Login
+                                </Link>}
                             </div>
                         )}
                     </div>

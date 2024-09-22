@@ -6,6 +6,8 @@ import UserSignup from "../pages/user/UserSignup";
 import UserLogin from "../pages/user/UserLogin";
 import UserProfile from "../components/UserProfile";
 import ProtectedRoute from "../components/ProtectedRoute";
+import UserOtpInput from "../pages/user/UserOtpInput";
+import SignupSuccess from "../pages/user/SignupSuccess";
 
 
 const router = createBrowserRouter(
@@ -13,6 +15,8 @@ const router = createBrowserRouter(
         <>
             <Route path="/signup" element={<UserSignup />} />
             <Route path="/login" element={<UserLogin />} />
+            <Route path="/verify-otp" element={<UserOtpInput />} />
+            <Route path="/signup-success" element={<SignupSuccess />} />
             <Route path="/" element={<UserLayout />} >
                 <Route path="/" element={<Navigate to="/home" />} />
                 <Route path="/home" element={<Home />} />

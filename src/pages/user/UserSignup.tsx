@@ -3,9 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import axios, { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/Store';
 
-// Validation Schema using Yup
 const SignupSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
     phone: Yup.string()
@@ -19,9 +22,32 @@ const SignupSchema = Yup.object().shape({
         .required('Required'),
 });
 
+
 const UserSignup: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const navigate = useNavigate();
+
+    const isAuthenticated = useSelector((state: RootState) => state.authReducer.isAuthenticated);
+    if (isAuthenticated) {
+        return <Navigate to="/home" replace />
+    }
+
+    const handleSubmit = async (email: string, phone: string, password: string, confirmPassword: string) => {
+        try {
+            const response = await axios.post('http://localhost:3000/user/signup', { email, phone, password, confirmPassword });
+            toast.success(response.data?.message);
+            localStorage.setItem('otpTimer', "60");
+            localStorage.setItem('otpTimestamp', Date.now().toString());
+            navigate("/verify-otp", { state: { email } });
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                toast.error(error.response?.data?.message);
+            } else {
+                toast.error('An unexpected error occured');
+            }
+        }
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-background-50">
@@ -36,9 +62,10 @@ const UserSignup: React.FC = () => {
                 <Formik
                     initialValues={{ email: '', phone: '', password: '', confirmPassword: '' }}
                     validationSchema={SignupSchema}
-                    onSubmit={(values) => {
+                    onSubmit={(values, { setSubmitting }) => {
                         // Handle form submission (send data to backend, etc.)
-                        console.log(values);
+                        handleSubmit(values.email, values.phone, values.password, values.confirmPassword);
+                        setSubmitting(false);
                     }}
                 >
                     {({ isSubmitting }) => (
