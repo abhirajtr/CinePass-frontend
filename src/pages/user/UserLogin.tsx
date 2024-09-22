@@ -3,10 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+// import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/Store';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../features/auth/authThunks';
+import { Link, Navigate } from 'react-router-dom';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -18,7 +19,7 @@ const LoginSchema = Yup.object().shape({
 const UserLogin: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const dispatch: AppDispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const isAuthenticated = useSelector((state: RootState) => state.authReducer.isAuthenticated);
 
@@ -47,9 +48,10 @@ const UserLogin: React.FC = () => {
                     initialValues={{ email: '', password: '' }}
                     validationSchema={LoginSchema}
                     onSubmit={async (values) => {
+                        const { email, password } = values;
                         try {
-                            await dispatch(login(values));
-                            navigate("/home");
+                            await dispatch(login({ email, password }));
+                            // navigate("/home");
                         } catch (error) {
                             console.log(error);
                         }
