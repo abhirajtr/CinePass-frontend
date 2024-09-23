@@ -16,7 +16,6 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ requiredRole, children }) => 
         // Redirect to login if not authenticated
         return <Navigate to="/login" replace />;
     }
-
     if (requiredRole && userRole !== requiredRole) {
         // Redirect to unauthorized page if role doesn't match
         return <Navigate to="/unauthorized" replace />;

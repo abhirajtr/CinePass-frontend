@@ -9,11 +9,22 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import UserOtpInput from "../pages/user/UserOtpInput";
 import SignupSuccess from "../pages/user/SignupSuccess";
 import ForgotPassword from "../pages/user/UserForgotPassword";
+import AdminLogin from "../pages/admin/AdminLogin";
+import AdminLayout from "../layouts/AdminLayout";
+import UserList from "../components/UsersList";
 
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
+            <Route path="/admin/login" element={<AdminLogin />} />
+            {/* <Route path="/admin" element={<Navigate to="/admin/login" />} /> */}
+            <Route path="/admin" element={<AdminLayout />}>
+                <Route path="/admin" element={<Navigate to="/admin/users" />}></Route>
+                <Route path="users" element={<UserList />} />
+            </Route>
+
+
             <Route path="/signup" element={<UserSignup />} />
             <Route path="/login" element={<UserLogin />} />
             <Route path="/verify-otp" element={<UserOtpInput />} />
