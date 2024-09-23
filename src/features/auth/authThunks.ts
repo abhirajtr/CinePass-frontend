@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { loginSuccess } from "./authSlice";
 import axios, { AxiosError } from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export const login = createAsyncThunk(
     'auth/login',

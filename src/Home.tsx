@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-// import UserLayout from "./layouts/UserLayout";
 import MovieCard from "./components/MovieCard";
 
 const image = 'https://image.tmdb.org/t/p/w1280/sjC29cgm4qZAnpOJQbYKCxDCcra.jpg';
