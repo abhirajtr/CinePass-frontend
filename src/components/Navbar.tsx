@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/Store";
+import { toast } from "sonner";
 
 const Navbar: FC = () => {
     const [locationDropDown, setLocationDropDown] = useState<boolean>(false);
@@ -100,43 +101,70 @@ const Navbar: FC = () => {
                     </div>
 
                     {/* Profile */}
-                    <div className="relative" ref={profileRef}>
-                        <button
-                            onClick={toggleProfileDropDown}
-                            className="flex items-center text-text-950 focus:outline-none focus:ring focus:ring-accent-500"
-                            aria-haspopup="true"
-                            aria-expanded={profileDropDown}
-                        >
-                            <FaUserCircle className="text-2xl" />
-                            <IoMdArrowDropdown className="ml-1" />
-                        </button>
-
-                        {profileDropDown && (
-                            <div className="absolute right-0 mt-2 w-48 bg-secondary-950 rounded-md shadow-lg py-2 z-20">
-                                {isAuthenticated && <>
-                                    <Link
-                                        to="/profile"
-                                        onClick={() => setProfileDropDown(false)}
-                                        className="block px-4 py-2 text-text-50 hover:bg-accent-500"
-                                    >
-                                        Profile
-                                    </Link>
-                                    <button
-                                        onClick={() => { setProfileDropDown(false); handleLogout(); }}
-                                        className="block w-full px-4 py-2 text-left text-text-50 hover:bg-accent-500">
-                                        Logout
-                                    </button>
-                                </>}
-
-                                {!isAuthenticated && <Link
-                                    to="/login"
-                                    onClick={() => setProfileDropDown(false)}
-                                    className="block px-4 py-2 text-text-50 hover:bg-accent-500"
+                    <div className="min-w-20">
+                        {isAuthenticated ?
+                            <div className="relative" ref={profileRef}>
+                                <button
+                                    onClick={toggleProfileDropDown}
+                                    className="flex items-center text-text-950 focus:outline-none focus:ring focus:ring-accent-500"
+                                    aria-haspopup="true"
+                                    aria-expanded={profileDropDown}
                                 >
-                                    Login
-                                </Link>}
-                            </div>
-                        )}
+                                    <FaUserCircle className="text-2xl" />
+                                    <IoMdArrowDropdown className="ml-1" />
+                                </button>
+                                {profileDropDown && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-secondary-950 rounded-md shadow-lg py-2 z-20">
+
+                                        <Link
+                                            to="/profile"
+                                            onClick={() => setProfileDropDown(false)}
+                                            className="block px-4 py-2 text-text-50 hover:bg-accent-500"
+                                        >
+                                            Profile
+                                        </Link>
+                                        <button
+                                            onClick={() => {
+                                                setProfileDropDown(false);
+                                                toast('Are you sure you want to logout?', {
+                                                    position: "top-right",
+                                                    duration: Infinity, // Keeps toast until action/cancel is clicked
+                                                    unstyled: true, // Keep this if you want full control of the styles
+                                                    classNames: {
+                                                        toast: 'bg-background-500  p-4 rounded-lg', // Main toast container styles
+                                                        title: 'text-text-950 text-xl font-semibold mb-2', // Toast title
+                                                        description: 'text-white text-md', // Toast description (if any)
+                                                        actionButton: 'ml-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition', // Style for "Yes" button
+                                                        cancelButton: 'bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition', // Style for "Cancel" button
+                                                        closeButton: 'bg-lime-400 text-white p-2 rounded-full hover:bg-lime-500 transition', // Style for "Close" button if it exists
+                                                    },
+                                                    action: {
+                                                        label: "Yes",
+                                                        onClick: () => {
+                                                            setProfileDropDown(false); // Close dropdown
+                                                            handleLogout(); // Call the logout handler
+                                                        },
+                                                    },
+                                                    cancel: {
+                                                        label: 'Cancel',
+                                                        onClick: () => console.log('Cancelled logout!'),
+                                                    },
+                                                });
+                                            }}
+                                            className="block w-full px-3 py-2 text-left text-text-50 hover:bg-accent-500"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div> :
+                            <Link className="text-text-950 px-3 py-1 rounded bg-pink-600"
+                                to="/login"
+
+                            >
+                                Sign In
+                            </Link>
+                        }
                     </div>
                 </div>
             </div>
