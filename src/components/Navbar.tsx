@@ -61,14 +61,18 @@ const Navbar: FC = () => {
                 </div>
 
                 {/* Search bar */}
-                <div className="flex-grow max-w-lg mx-4 relative">
+                <form autoComplete="off" className="flex-grow max-w-lg mx-4 relative">
+
                     <input
+                        id="searchInput"
+                        name="searchInput"
                         type="text"
                         placeholder="Search for movie or theatre"
                         className="w-full p-2 pl-10 text-text-950 bg-background-200 placeholder-text-500 border border-secondary-50 rounded-md focus:outline-none focus:ring focus:ring-accent"
+                        autoComplete="off"
                     />
                     <FaSearch className="text-text-700 absolute left-3 top-1/2 transform -translate-y-1/2" />
-                </div>
+                </form>
 
                 {/* Location and profile dropdowns */}
                 <div className="flex items-center space-x-4">
