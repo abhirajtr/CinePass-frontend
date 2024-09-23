@@ -109,7 +109,7 @@ const UserSignup: React.FC = () => {
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-3 top-10 cursor-pointer text-text-950"
                                 >
-                                    <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                                 </span>
                                 <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
                             </div>
@@ -126,7 +126,7 @@ const UserSignup: React.FC = () => {
                                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                     className="absolute right-3 top-10 cursor-pointer text-text-950"
                                 >
-                                    <FontAwesomeIcon icon={showConfirmPassword ? faEye : faEyeSlash} />
+                                    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
                                 </span>
                                 <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-1" />
                             </div>

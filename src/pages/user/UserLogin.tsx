@@ -72,7 +72,7 @@ const UserLogin: React.FC = () => {
                             </div>
 
                             {/* Password Field */}
-                            <div className="mb-4 relative">
+                            <div className=" relative">
                                 <label htmlFor="password" className="block mb-1 text-text-950">Password</label>
                                 <Field
                                     type={showPassword ? "text" : "password"}
@@ -86,6 +86,9 @@ const UserLogin: React.FC = () => {
                                     <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
                                 </span>
                                 <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
+                            </div>
+                            <div className="">
+                                <Link to="/forgot-password" className="text-accent-500 hover:underline">Forgot Password?</Link>
                             </div>
 
                             {/* Submit Button */}
