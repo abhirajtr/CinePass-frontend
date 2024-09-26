@@ -13,7 +13,7 @@ const AdminSidebar: React.FC = () => {
     };
 
     return (
-        <div className="w-64 bg-gray-800 text-white min-h-screen p-4">
+        <div className="w-64 bg-background-100 text-white min-h-screen p-4">
             <h2 className="text-xl font-bold mb-4">Admin Panel</h2>
             <nav>
                 <ul>
@@ -21,7 +21,7 @@ const AdminSidebar: React.FC = () => {
                         <NavLink
                             to="/admin/users"
                             className={({ isActive }) =>
-                                `block p-2 rounded ${isActive ? 'bg-gray-700' : 'hover:bg-gray-600'}`
+                                `block p-2 rounded ${isActive ? 'bg-accent-500' : 'hover:bg-accent-200'}`
                             }
                         >
                             Users
@@ -31,7 +31,7 @@ const AdminSidebar: React.FC = () => {
                         <NavLink
                             to="/admin/theatres"
                             className={({ isActive }) =>
-                                `block p-2 rounded ${isActive ? 'bg-gray-700' : 'hover:bg-gray-600'}`
+                                `block p-2 rounded ${isActive ? 'bg-accent-500' : 'hover:bg-accent-200'}`
                             }
                         >
                             Theatres
@@ -41,7 +41,7 @@ const AdminSidebar: React.FC = () => {
                         <NavLink
                             to="/admin/reports"
                             className={({ isActive }) =>
-                                `block p-2 rounded ${isActive ? 'bg-gray-700' : 'hover:bg-gray-600'}`
+                                `block p-2 rounded ${isActive ? 'bg-accent-500' : 'hover:bg-accent-200'}`
                             }
                         >
                             Reports

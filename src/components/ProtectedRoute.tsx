@@ -13,8 +13,8 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ requiredRole, children }) => 
     const userRole = useSelector((state: RootState) => state.authReducer.role);
 
     if (!isAuthenticated) {
-        // Redirect to login if not authenticated
-        return <Navigate to="/login" replace />;
+        const loginPath = requiredRole === "user" ? `/login` : `/${requiredRole}/login`;
+        return <Navigate to={loginPath} replace />;
     }
     if (requiredRole && userRole !== requiredRole) {
         // Redirect to unauthorized page if role doesn't match

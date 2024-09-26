@@ -17,6 +17,7 @@ const Navbar: FC = () => {
     const navigate = useNavigate();
 
     const isAuthenticated = useSelector((state: RootState) => state.authReducer.isAuthenticated);
+    const userRole = useSelector((state: RootState) => state.authReducer.role);
 
     const locationRef = useRef<HTMLDivElement>(null);
     const profileRef = useRef<HTMLDivElement>(null);
@@ -106,7 +107,7 @@ const Navbar: FC = () => {
 
                     {/* Profile */}
                     <div className="min-w-20">
-                        {isAuthenticated ?
+                        {isAuthenticated && userRole === "user" ?
                             <div className="relative" ref={profileRef}>
                                 <button
                                     onClick={toggleProfileDropDown}
@@ -162,12 +163,18 @@ const Navbar: FC = () => {
                                     </div>
                                 )}
                             </div> :
-                            <Link className="text-text-950 px-3 py-1 rounded bg-pink-600"
-                                to="/login"
+                            <button className="text-text-950 px-3 py-1 rounded bg-pink-600"
+                                onClick={() => {
+                                    if (userRole) {
+                                        return navigate(`${userRole}/`);
+                                    } else {
+                                        return navigate("/login");
+                                    }
+                                }}
 
                             >
                                 Sign In
-                            </Link>
+                            </button>
                         }
                     </div>
                 </div>

@@ -21,7 +21,11 @@ const router = createBrowserRouter(
             {/* <Route path="/admin" element={<Navigate to="/admin/login" />} /> */}
             <Route path="/admin" element={<AdminLayout />}>
                 <Route path="/admin" element={<Navigate to="/admin/users" />}></Route>
-                <Route path="users" element={<UserList />} />
+                <Route path="users" element={
+                    <ProtectedRoute requiredRole="admin">
+                        <UserList />
+                    </ProtectedRoute>
+                } />
             </Route>
 
 
