@@ -1,16 +1,17 @@
-import axios, { AxiosError } from 'axios';
+// import axios, { AxiosError } from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 
 interface OtpInputProps {
-    email: string; // Expecting email as a prop
+    email: string;
     submitAction: (otp: string) => void;
+    resendAction: () => void;
 }
 
-const OtpInput: React.FC<OtpInputProps> = ({ email, submitAction }) => {
+const OtpInput: React.FC<OtpInputProps> = ({ email, submitAction, resendAction }) => {
     const [otp, setOtp] = useState<string[]>(['', '', '', '']);
     const [isResendDisabled, setIsResendDisabled] = useState<boolean>(true);
-    const [timer, setTimer] = useState<number>(60); // Timer for resend
+    const [timer, setTimer] = useState<number>(60);
     const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
     useEffect(() => {
@@ -50,34 +51,14 @@ const OtpInput: React.FC<OtpInputProps> = ({ email, submitAction }) => {
 
     const handleSubmit = async () => {
         const otpValue = otp.join('');
-        try {
-            // const response = await axios.post('http://localhost:3000/user/verify-signup', { email, otp: otpValue });
-            submitAction(otpValue);
-            // toast.success(response.data.message);
-            // navigate("/signup-success", { state: { otpVerified: true }, replace: true });
-        } catch (error) {
-            if (error instanceof AxiosError) {
-                toast.error(error.response?.data?.message || 'Failed to verify OTP.');
-            } else {
-                toast.error('An unexpected error occurred. Please try again.');
-            }
-        }
+        submitAction(otpValue);
     };
 
-    const handleResendOtp = async () => {
-        try {
-            const response = await axios.post('http://localhost:3000/user/resend-otp', { email });
-            setIsResendDisabled(true);
-            setTimer(60); // Reset timer
-            toast.success(response.data.message);
-        } catch (error) {
-            if (error instanceof AxiosError) {
-                toast.error(error.response?.data?.message || 'Failed to resend OTP.');
-            } else {
-                toast.error('An unexpected error occurred. Please try again.');
-            }
-        }
-    };
+    const handleResendOtp = async() => {
+        await resendAction();
+        setIsResendDisabled(true);
+        setTimer(60);
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-background-50">

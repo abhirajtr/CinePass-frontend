@@ -67,6 +67,20 @@ const ForgotPassword: React.FC = () => {
         }
     }
 
+    const handleResendOtp = async () => {
+        try {
+            const response = await axios.post('http://localhost:3000/user/resend-otp', { email });
+             // Reset timer
+            toast.success(response.data.message);
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                toast.error(error.response?.data?.message || 'Failed to resend OTP.');
+            } else {
+                toast.error('An unexpected error occurred. Please try again.');
+            }
+        }
+    };
+
     return (
         <>
             {!otpSent ? (
@@ -104,7 +118,7 @@ const ForgotPassword: React.FC = () => {
             ) : otpVerified ?
                 <PasswordInput submitAction={handleSubmitPassword} /> :
                 (
-                    <OtpInput email={email} submitAction={handleSubmit} />
+                    <OtpInput email={email} submitAction={handleSubmit} resendAction={handleResendOtp} />
                 )}
         </>
     );

@@ -12,11 +12,17 @@ import ForgotPassword from "../pages/user/UserForgotPassword";
 import AdminLogin from "../pages/admin/AdminLogin";
 import AdminLayout from "../layouts/AdminLayout";
 import UserList from "../components/UsersList";
+import TheatreSignup from "../pages/theatre/TheatreSignup";
+import TheatreVerifyOtp from "../pages/theatre/TheatreVerifyOtp";
+import TheatreSignupSuccess from "../pages/theatre/TheatreSignupSuccess";
 
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <>
+        <> 
+            <Route path="/theatre/signup" element={<TheatreSignup />} />
+            <Route path="/theatre/signup/verify-opt" element={<TheatreVerifyOtp />} />
+            <Route path="/theatre/signup/success" element={<TheatreSignupSuccess />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             {/* <Route path="/admin" element={<Navigate to="/admin/login" />} /> */}
             <Route path="/admin" element={<AdminLayout />}>
