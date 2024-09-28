@@ -4,6 +4,7 @@ import AdminSidebar from "../components/AdminSidebar"; // Import the Admin Sideb
 import { Outlet } from "react-router-dom";
 
 const AdminLayout: FC = () => {
+    
     return (
         <div className="flex min-h-screen bg-background-50 text-text-950">
             <AdminSidebar /> {/* Render the Admin Sidebar */}

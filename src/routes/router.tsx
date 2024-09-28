@@ -15,16 +15,30 @@ import UserList from "../components/UsersList";
 import TheatreSignup from "../pages/theatre/TheatreSignup";
 import TheatreVerifyOtp from "../pages/theatre/TheatreVerifyOtp";
 import TheatreSignupSuccess from "../pages/theatre/TheatreSignupSuccess";
+import TheatreLogin from "../pages/theatre/TheatreLogin";
+// import ScreenCard from "../components/ScreenCard";
+import TheatreDashboard from "../components/TheatreDashboard";
+import TheatreLayout from "../layouts/TheatreLayout";
+// import { TheatreLayout } from "../layouts/TheatreLayout";
 
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <> 
+        <>
+            {/* Theatre Routes */}
             <Route path="/theatre/signup" element={<TheatreSignup />} />
-            <Route path="/theatre/signup/verify-opt" element={<TheatreVerifyOtp />} />
+            <Route path="/theatre/login" element={<TheatreLogin />} />
+            <Route path="/theatre/signup/verify-otp" element={<TheatreVerifyOtp />} />
             <Route path="/theatre/signup/success" element={<TheatreSignupSuccess />} />
+            {/* <Route path="/theatre" element={<Navigate to="/theatre/dashboard/screens" replace />} /> */}
+            <Route path="/theatre" element={<TheatreLayout />}>
+                <Route index element={<Navigate to="/theatre/dashboard" replace={true} />} />
+                <Route path="dashboard" element={<TheatreDashboard />} />
+
+            </Route>
+
+
             <Route path="/admin/login" element={<AdminLogin />} />
-            {/* <Route path="/admin" element={<Navigate to="/admin/login" />} /> */}
             <Route path="/admin" element={<AdminLayout />}>
                 <Route path="/admin" element={<Navigate to="/admin/users" />}></Route>
                 <Route path="users" element={
@@ -48,8 +62,8 @@ const router = createBrowserRouter(
                         <UserProfile />
                     </ProtectedRoute>
                 } />
-                <Route path="*" element={<ErrorPage />} />
             </Route>
+            <Route path="*" element={<ErrorPage />} />
         </>
 
     )

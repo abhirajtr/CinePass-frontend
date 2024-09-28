@@ -7,17 +7,17 @@ const TheatreSignupSuccess: React.FC = () => {
     const location = useLocation();
     const isVerified = location.state?.verified || false;
     console.log(isVerified);
-    
+
     const handleLoginRedirect = () => {
-        navigate('/theatre/login');
+        navigate('/theatre/login', { replace: true });
     };
     useEffect(() => {
         if (!isVerified) {
             return navigate("/theatre/login", { replace: true });
         }
     }, [isVerified, navigate, location])
-    
-    
+
+
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-background-50">

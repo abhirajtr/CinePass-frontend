@@ -36,3 +36,18 @@ export const adminLogin = createAsyncThunk(
         }
     }
 )
+export const theatreLogin = createAsyncThunk(
+    'auth/theatreLogin',
+    async (loginData: { email: string, password: string }, { dispatch }) => {
+        try {
+            const response = await axios.post('http://localhost:3000/theatre/login', loginData, { withCredentials: true });
+            toast.success(response.data?.message);
+            dispatch(loginSuccess(response.data.accessToken));
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                toast.error(error.response?.data?.message);
+            }
+            console.log(error);
+        }
+    }
+)
