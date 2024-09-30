@@ -13,7 +13,7 @@ const AdminSidebar: React.FC = () => {
     };
 
     return (
-        <div className="w-64 bg-background-100 text-white min-h-screen p-4">
+        <div className="w-64 bg-background-100 text-white min-h-screen p-4 fixed top-0 left-0 h-full">
             <h2 className="text-xl font-bold mb-4">Admin Panel</h2>
             <nav>
                 <ul>

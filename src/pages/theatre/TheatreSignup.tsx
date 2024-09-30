@@ -40,7 +40,7 @@ const TheatreSignup: FC = () => {
         try {
             const { data } = await axios.post('http://localhost:3000/theatre/signup', { name, email, phone, location, password, confirmPassword });
             toast.success(data.message);
-            navigate('/theatre/signup/verify-opt', { state: { email }, replace: true });
+            navigate('/theatre/signup/verify-otp', { state: { email }, replace: true });
         } catch (error) {
             console.log(error);
             if (error instanceof AxiosError) {

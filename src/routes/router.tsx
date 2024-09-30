@@ -19,6 +19,7 @@ import TheatreLogin from "../pages/theatre/TheatreLogin";
 // import ScreenCard from "../components/ScreenCard";
 import TheatreDashboard from "../components/TheatreDashboard";
 import TheatreLayout from "../layouts/TheatreLayout";
+import AdminTheatreList from "../components/AdminTheatreList";
 // import { TheatreLayout } from "../layouts/TheatreLayout";
 
 
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
                         <UserList />
                     </ProtectedRoute>
                 } />
+                <Route path="theatres" element={<AdminTheatreList />} />
             </Route>
 
 

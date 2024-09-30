@@ -20,9 +20,13 @@ const TheatreLogin: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();
 
     const isAuthenticated = useSelector((state: RootState) => state.authReducer.isAuthenticated);
+    const userRole = useSelector((state: RootState) => state.authReducer.role);
 
-    if (isAuthenticated) {
+    if (isAuthenticated && userRole === "theatre") {
         return <Navigate to="/theatre/dashboard" replace />
+    }
+    if (isAuthenticated && userRole === "admin") {
+        return <Navigate to="/admin/users" replace />
     }
 
     return (
