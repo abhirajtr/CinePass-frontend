@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -26,7 +27,7 @@ const AdminTheatreList = () => {
     const [modalMessage, setModalMessage] = useState<string>('');
     const [modalAction, setModalAction] = useState<() => void>(() => { });
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const debouncedSearchValue = useDebounce(searchTerm, 500);
+    const debouncedSearchValue = useDebounce(searchTerm, 500);    
 
     const fetchTheatres = async () => {
         try {
@@ -123,7 +124,7 @@ const AdminTheatreList = () => {
                 className='w-full mt-2 p-2 border border-accent-500 rounded-md bg-background-50'
                 placeholder='Search by name or email'
             />
-            <div className="overflow-x-auto mt-3 max-h-[33rem] min-h-[33rem] hide-scrollbar">
+            <div className="overflow-x-auto mt-3 max-h-[33rem] min-h-[33rem] scrollbar scrollbar-thumb-scrollbar-thumb scrollbar-thumb-rounded-full scrollbar-track-scrollbar-bg">
                 <table className="min-w-full bg-background-100 border border-accent-200 rounded-md table-fixed">
                     <thead className="bg-background-200">
                         <tr className='border-b border-accent-200'>

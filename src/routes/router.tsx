@@ -20,6 +20,7 @@ import TheatreLogin from "../pages/theatre/TheatreLogin";
 import TheatreDashboard from "../components/TheatreDashboard";
 import TheatreLayout from "../layouts/TheatreLayout";
 import AdminTheatreList from "../components/AdminTheatreList";
+import AdminMovies from "../components/AdminMovies";
 // import { TheatreLayout } from "../layouts/TheatreLayout";
 
 
@@ -38,7 +39,7 @@ const router = createBrowserRouter(
 
             </Route>
 
-
+            {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
                 <Route path="/admin" element={<Navigate to="/admin/users" />}></Route>
@@ -47,7 +48,16 @@ const router = createBrowserRouter(
                         <UserList />
                     </ProtectedRoute>
                 } />
-                <Route path="theatres" element={<AdminTheatreList />} />
+                <Route path="theatres" element={
+                    <ProtectedRoute requiredRole="admin">
+                        <AdminTheatreList />
+                    </ProtectedRoute>
+                } />
+                <Route path="movies" element={
+                    <ProtectedRoute requiredRole="admin">
+                        <AdminMovies />
+                    </ProtectedRoute>
+                } />
             </Route>
 
 

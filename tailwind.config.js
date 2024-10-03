@@ -8,6 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        'scrollbar-bg': '#2a2a2a',  // Background color for scrollbar
+        'scrollbar-thumb': '#555555',  // Thumb (the draggable part) color
+        'scrollbar-thumb-hover': '#888888', // Thumb hover color,
         'text': {
           50: 'var(--text-50)',
           100: 'var(--text-100)',
@@ -78,6 +81,7 @@ export default {
   },
   plugins: [
     require('tailwind-scrollbar-hide'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
 }
 

@@ -13,7 +13,7 @@ const AdminSidebar: React.FC = () => {
     };
 
     return (
-        <div className="w-64 bg-background-100 text-white min-h-screen p-4 fixed top-0 left-0 h-full">
+        <div className="flex flex-col w-64 bg-background-100 text-white min-h-screen p-4 fixed top-0 left-0 h-screen">
             <h2 className="text-xl font-bold mb-4">Admin Panel</h2>
             <nav>
                 <ul>
@@ -39,25 +39,33 @@ const AdminSidebar: React.FC = () => {
                     </li>
                     <li className="mb-2">
                         <NavLink
-                            to="/admin/reports"
+                            to="/admin/movies"
                             className={({ isActive }) =>
                                 `block p-2 rounded ${isActive ? 'bg-accent-500' : 'hover:bg-accent-200'}`
                             }
                         >
-                            Reports
+                            Movies
                         </NavLink>
                     </li>
                     {/* Add more links as needed */}
-                    <li className="mb-2">
+                    {/* <li className="mt-20">
                         <button
                             onClick={handleLogout}
                             className="block w-full p-2 rounded bg-red-600 hover:bg-red-500"
                         >
                             Logout
                         </button>
-                    </li>
+                    </li> */}
                 </ul>
             </nav>
+            <div className="mt-auto mb-5"> {/* This pushes the logout button to the bottom */}
+                <button
+                    onClick={handleLogout}
+                    className="block w-full p-2 rounded bg-red-600 hover:bg-red-500"
+                >
+                    Logout
+                </button>
+            </div>
         </div>
     );
 };
