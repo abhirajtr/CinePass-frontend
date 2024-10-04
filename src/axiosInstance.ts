@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: baseUrl,
 });
 
 // Request interceptor to attach the access token to headers
@@ -26,7 +28,7 @@ axiosInstance.interceptors.response.use(
 
             try {
                 // Request a new access token using the refresh token
-                const response = await axios.post('http://localhost:3000/user/refresh-token', {}, { withCredentials: true });
+                const response = await axios.post(`${baseUrl}/user/refresh-token`, {}, { withCredentials: true });
 
                 // Assuming the response contains a new access token
                 const { accessToken } = response.data;

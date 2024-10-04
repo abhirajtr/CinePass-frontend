@@ -7,7 +7,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { AppDispatch, RootState } from '../../store/Store';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminLogin } from '../../features/auth/authThunks';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -34,14 +34,6 @@ const AdminLogin: React.FC = () => {
 
                 <div className="mb-4">
                     <h3 className='font-semibold text-text-950'>Welcome back!</h3>
-                    <p
-                        className='text-text-800'
-                    >Don't have an account?{' '}
-                        <Link to="/signup"
-                            className='text-accent-500 hover:underline'
-                        >Create a new account now</Link><br />
-                        It's FREE! Takes less than a minute</p>
-
                 </div>
 
                 <Formik
@@ -87,12 +79,12 @@ const AdminLogin: React.FC = () => {
                                 </span>
                                 <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
                             </div>
-                            <div className="">
+                            {/* <div className="">
                                 <Link to="/forgot-password" className="text-accent-500 hover:underline">Forgot Password?</Link>
-                            </div>
+                            </div> */}
 
                             {/* Submit Button */}
-                            <div>
+                            <div className='mt-2'>
                                 <button
                                     type="submit"
                                     className="w-full bg-primary-600 text-white p-2 rounded mt-4"

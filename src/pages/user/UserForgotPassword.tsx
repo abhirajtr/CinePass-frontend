@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import OtpInput from './OtpInput';
 import { toast } from 'sonner';
 import PasswordInput from './PasswordInput';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/Store';
+import { guestApi } from '../../features/guestApi';
 
 const ForgotPasswordSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -26,7 +27,7 @@ const ForgotPassword: React.FC = () => {
     }, [isAuthenticated, navigate]);
     const handleSendOtp = async (values: { email: string }) => {
         try {
-            const response = await axios.post('http://localhost:3000/user/forgot-password', values);
+            const response = await guestApi.post('/user/forgot-password', values);
             console.log(response);
             toast.success(response.data.message);
             setEmail(values.email); // Store email for OTP verification
@@ -40,7 +41,7 @@ const ForgotPassword: React.FC = () => {
     };
     const handleSubmit = async (otp: string) => {
         try {
-            const { data } = await axios.post('http://localhost:3000/user/forgot-password/verify-otp', { email, otp });
+            const { data } = await guestApi.post('/user/forgot-password/verify-otp', { email, otp });
             setOtpVerified(true);
             console.log(otp);
             toast.success(data.message);
@@ -55,7 +56,7 @@ const ForgotPassword: React.FC = () => {
     const handleSubmitPassword = async (password: string, confirmPassword: string) => {
         try {
             console.log(email, password, confirmPassword);
-            const { data } = await axios.post('http://localhost:3000/user/password-reset', { email, password, confirmPassword });
+            const { data } = await guestApi.post('/user/password-reset', { email, password, confirmPassword });
             toast.success(data.message)
             navigate("/login", { replace: true });
         } catch (error) {
@@ -69,7 +70,7 @@ const ForgotPassword: React.FC = () => {
 
     const handleResendOtp = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/user/resend-otp', { email });
+            const response = await guestApi.post('/user/resend-otp', { email });
              // Reset timer
             toast.success(response.data.message);
         } catch (error) {

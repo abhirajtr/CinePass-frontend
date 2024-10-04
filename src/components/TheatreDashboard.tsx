@@ -1,5 +1,3 @@
-// src/pages/TheatreDashboard.tsx
-
 import React from 'react';
 
 const TheatreDashboard: React.FC = () => {

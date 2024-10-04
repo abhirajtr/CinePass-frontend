@@ -1,12 +1,13 @@
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import * as Yup from 'yup';
+import { guestApi } from "../../features/guestApi";
 
 const TheatreSignupSchema = Yup.object().shape({
     name: Yup.string()
@@ -38,7 +39,7 @@ const TheatreSignup: FC = () => {
     const handleSubmit = async (name: string, email: string, phone: string, location: string, password: string, confirmPassword: string) => {
         console.log({ name, email, phone, location, password, confirmPassword });
         try {
-            const { data } = await axios.post('http://localhost:3000/theatre/signup', { name, email, phone, location, password, confirmPassword });
+            const { data } = await guestApi.post('/theatre/signup', { name, email, phone, location, password, confirmPassword });
             toast.success(data.message);
             navigate('/theatre/signup/verify-otp', { state: { email }, replace: true });
         } catch (error) {

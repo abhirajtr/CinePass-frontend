@@ -4,10 +4,11 @@ import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/Store';
+import { guestApi } from '../../features/guestApi';
 
 const SignupSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -35,7 +36,7 @@ const UserSignup: React.FC = () => {
 
     const handleSubmit = async (email: string, phone: string, password: string, confirmPassword: string) => {
         try {
-            const response = await axios.post('http://localhost:3000/user/signup', { email, phone, password, confirmPassword });
+            const response = await guestApi.post('/user/signup', { email, phone, password, confirmPassword });
             toast.success(response.data?.message);
             localStorage.setItem('otpTimer', "60");
             localStorage.setItem('otpTimestamp', Date.now().toString());
