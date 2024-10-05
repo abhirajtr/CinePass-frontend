@@ -1,7 +1,8 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { guestApi } from '../../features/guestApi';
 
 
 
@@ -103,7 +104,7 @@ const UserOtpInput: React.FC = () => {
         const otpValue = otp.join(''); // Combine OTP digits into one string
         // onSubmitOtp(otpValue); // Trigger callback with OTP
         try {
-            const response = await axios.post('http://localhost:3000/user/verify-signup', { email, otp: otpValue });
+            const response = await guestApi.post('/user/verify-signup', { email, otp: otpValue });
             toast.success(response.data.message);
             navigate("/signup-success", { state: { otpVerified: true }, replace: true });
         } catch (error) {
@@ -117,7 +118,7 @@ const UserOtpInput: React.FC = () => {
     };
     const handleResendOtp = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/user/resend-otp', { email });
+            const response = await guestApi.post('/user/resend-otp', { email });
             setTimer(60);
             setIsResendDisabled(true);
             toast.success(response.data.message);
