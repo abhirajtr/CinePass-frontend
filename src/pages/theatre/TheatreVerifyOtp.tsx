@@ -1,8 +1,9 @@
 import { FC, useEffect } from "react";
 import OtpInput from "../user/OtpInput";
 import { toast } from "sonner";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { guestApi } from "../../features/guestApi";
 
 // const email = "abhirajtr007@gmail.com";
 
@@ -23,7 +24,7 @@ const TheatreVerifyOtp: FC = () => {
 
     const submitAction = async (otp: string) => {
         try {
-            const { data } = await axios.post('http://localhost:3000/theatre/signup/verify-otp', { email, otp });
+            const { data } = await guestApi.post('/theatre/signup/verify-otp', { email, otp });
             toast.success(data.message);
             navigate("/theatre/signup/success", { state: { verified: true }, replace: true })
         } catch (error) {
@@ -40,7 +41,7 @@ const TheatreVerifyOtp: FC = () => {
     }
     const resendAction = async () => {
         try {
-            const { data } = await axios.post('http://localhost:3000/theatre/signup/resend-otp', { email });
+            const { data } = await guestApi.post('/theatre/signup/resend-otp', { email });
             toast.success(data.message);
         } catch (error) {
             if (error instanceof AxiosError) {
