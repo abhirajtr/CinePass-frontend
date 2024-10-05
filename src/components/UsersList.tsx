@@ -35,7 +35,7 @@ const UserList: React.FC = () => {
     const fetchUsers = async (searchTerm: string = "") => {
         // setLoading(true);
         try {
-            const response = await axiosInstance.get(`http://localhost:3000/admin/users`, {
+            const response = await axiosInstance.get(`/admin/users`, {
                 params: {
                     page: currentPage,
                     limit: usersPerPage,
@@ -80,7 +80,7 @@ const UserList: React.FC = () => {
             try {
                 const user = users.find(u => u.userId === selectedUserId);
 
-                await axiosInstance.patch(`http://localhost:3000/admin/users/${selectedUserId}/block`, {
+                await axiosInstance.patch(`/admin/users/${selectedUserId}/block`, {
                     isBlocked: !user?.isBlocked
                 });
 
